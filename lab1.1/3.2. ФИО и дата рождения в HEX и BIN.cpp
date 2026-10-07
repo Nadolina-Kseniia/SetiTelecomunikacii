@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <clocale>
+#include <windows.h>
+using namespace std;
+
+// UTF-8 -> CP1251 (для подготовки данных)
+string utf8_to_cp1251(const string& utf8) {
+    int wlen = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
+    wstring wstr(wlen, 0);
+    MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, &wstr[0], wlen);
+
+    int clen = WideCharToMultiByte(1251, 0, wstr.c_str(), -1, NULL, 0, NULL, NULL);
+    string cp1251(clen - 1, 0);
+    WideCharToMultiByte(1251, 0, wstr.c_str(), -1, &cp1251[0], clen, NULL, NULL);
+    return cp1251;
+}
+
+// CP1251 -> UTF-8 (для вывода на консоль в UTF-8)
+string cp1251_to_utf8(const string& cp1251) {
+    int wlen = MultiByteToWideChar(1251, 0, cp1251.c_str(), -1, NULL, 0);
+    wstring wstr(wlen, 0);
+    MultiByteToWideChar(1251, 0, cp1251.c_str(), -1, &wstr[0], wlen);
+
+    int len = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, NULL, 0, NULL, NULL);
+    string utf8(len - 1, 0);
+    WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &utf8[0], len, NULL, NULL);
+    return utf8;
+}
+
+string hexToBin(const string& hex) {
+    string bin;
+    for (char c : hex) {
+        int v;
+        if (c >= '0' && c <= '9')      v = c - '0';
+        else if (c >= 'A' && c <= 'F') v = c - 'A' + 10;
+        else if (c >= 'a' && c <= 'f') v = c - 'a' + 10;
+        else continue;
+        for (int i = 3; i >= 0; --i)
+            bin += ((v >> i) & 1) ? '1' : '0';
+    }
+    return bin;
+}
+
+int main() {
+    // Ставим кодовую страницу консоли в UTF-8 (чтобы русские литералы печатались)
+    SetConsoleOutputCP(CP_UTF8);
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+
+    // Готовим строку в CP1251
+    string text_cp1251 = utf8_to_cp1251("Надолина К.Р. 23.01.2005");
+
+    // Для отображения исходной строки конвертируем её обратно в UTF-8
+    cout << "Исходная строка: " << cp1251_to_utf8(text_cp1251) << "\n\n";
+
+    string hex;
+    cout << "Символ | код (dec) | код (hex)\n";
+    cout << "-------|-----------|----------\n";
+
+    for (unsigned char c : text_cp1251) {
+        char buf[8];
+        sprintf_s(buf, "%02X", c);
+
+        // каждый CP1251-байт превращаем в UTF-8 для отображения
+        string one(1, (char)c);
+        string disp = cp1251_to_utf8(one);
+
+        cout << "   " << disp << "    |   "
+            << (int)c << "      |   " << buf << "\n";
+        hex += buf;
+    }
+
+    cout << "\nHEX-строка:\n" << hex << "\n";
+
+    string bin = hexToBin(hex);
+    cout << "\nДвоичный код (" << bin.size() << " бит):\n" << bin << "\n";
+
+    while (bin.size() % 16) bin += '0';
+    int nPackets = bin.size() / 16;
+    cout << "\nПакеты по 16 бит (всего " << nPackets << "):\n";
+    for (int i = 0; i < nPackets; i++) {
+        cout << "  Пакет " << (i + 1) << ": "
+            << bin.substr(i * 16, 16) << "\n";
+    }
+    return 0;
+}

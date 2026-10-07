@@ -1,0 +1,21 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="../lab1.1/lab1.1.vcxproj" Id="87de50a2-6715-4498-9e05-afb8f37059f4" />
+  <Project Path="../lab1.2/lab1.2.vcxproj" Id="95a3bc72-c657-43c3-9ef1-6c5ee867f8ad" />
+  <Project Path="../lab1.3/lab1.3.vcxproj" Id="aab0bdab-52a2-4a02-9694-db3e47a5c172" />
+  <Project Path="../lab1.4/lab1.4.vcxproj" Id="5bd92a6f-2ae5-4793-8521-d042d981d5f0" />
+  <Project Path="../lab1.6/lab1.6.vcxproj" Id="de780dfc-2a51-467e-b0d2-65a75c9297f0" />
+  <Project Path="../lab1.7/lab1.7.vcxproj" Id="55811466-c740-4001-b2a5-78a384dd044d" />
+  <Project Path="../lab1.8/lab1.8.vcxproj" Id="c61e2276-b92e-478a-9c27-34cdb200f1c8" />
+  <Project Path="../lab2.1/lab2.1.vcxproj" Id="2d92942f-8789-40d7-a375-7c77e9270cf2" />
+  <Project Path="../lab2.2/lab2.2.vcxproj" Id="138910c7-9ab0-42c8-b3b1-807c15964203" />
+  <Project Path="../lab2.3/lab2.3.vcxproj" Id="3fe34034-6852-4615-9d73-ff71e33aa73f" />
+  <Project Path="../lab2.4/lab2.4.vcxproj" Id="4a80034c-eb74-41e1-908c-1cd264670d32" />
+  <Project Path="../lab3.1/lab3.1.vcxproj" Id="d78d5616-501c-46ac-8880-4a4f119f52bc" />
+  <Project Path="../lab3.2/lab3.2.vcxproj" Id="d6c25502-4eb6-467e-a6f7-057b6d376c69" />
+  <Project Path="../lab3/lab3.vcxproj" Id="809ee207-9e66-4f88-a779-9fcc96ae2bfb" />
+  <Project Path="lab1.vcxproj" Id="d5305f3b-da60-41ad-9052-f21607e3f12d" />
+</Solution>
